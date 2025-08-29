@@ -1179,6 +1179,10 @@ async def txt_handler(bot: Client, m: Message):
             elif "childId" in url and "parentId" in url:
                 url = f"https://anonymouspwplayer-0e5a3f512dec.herokuapp.com/pw?url={url}&token={pwtoken}"
                            
+            elif "classx" in url and "akamai" in url:
+                url = f"https://hls-proxy-jwmi.onrender.com/stream?url={url}"
+                           
+            
             if ".pdf*" in url:
                 url = f"https://dragoapi.vercel.app/pdf/{url}"
             
