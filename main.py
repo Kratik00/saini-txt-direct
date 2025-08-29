@@ -1180,8 +1180,19 @@ async def txt_handler(bot: Client, m: Message):
                 url = f"https://anonymouspwplayer-0e5a3f512dec.herokuapp.com/pw?url={url}&token={pwtoken}"
                            
             elif "classx" in url and "akamai" in url:
-                url = f"https://hls-proxy-jwmi.onrender.com/stream?url={url}"
-                           
+                try:
+        # API ke through wrap kar do
+                    proxy_url = f"https://hls-proxy-jwmi.onrender.com/stream?url={url}"
+                    response = requests.get(proxy_url, timeout=30)
+
+                    if response.status_code == 200:
+                       url = proxy_url   # Ab yeh final URL hoga yt-dlp ke liye
+                       cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
+                    else:
+                       raise Exception(f"Proxy API failed, status: {response.status_code}")
+
+                except Exception as e:
+                    raise Exception(f"Classx handling failed: {e}") 
             
             if ".pdf*" in url:
                 url = f"https://dragoapi.vercel.app/pdf/{url}"
