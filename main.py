@@ -1212,6 +1212,11 @@ async def txt_handler(bot: Client, m: Message):
                 cmd = f'yt-dlp -o "{name}.mp4" "{url}"'
             elif "webvideos.classplusapp." in url:
                cmd = f'yt-dlp --add-header "referer:https://web.classplusapp.com/" --add-header "x-cdn-tag:empty" -f "{ytf}" "{url}" -o "{name}.mp4"'
+            elif "classx" in url and "akamai" in url:
+    # Proxy ke through url set karo
+                proxy_url = f"https://hls-proxy-jwmi.onrender.com/stream?url={url}"
+    # ffmpeg se direct download
+                cmd = f'ffmpeg -i "{proxy_url}" -c copy -bsf:a aac_adtstoasc "{name}.mp4"'
             elif "youtube.com" in url or "youtu.be" in url:
                 cmd = f'yt-dlp --cookies youtube_cookies.txt -f "{ytf}" "{url}" -o "{name}".mp4'
             else:
